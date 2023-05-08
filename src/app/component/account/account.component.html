@@ -1,0 +1,191 @@
+<section style="background-color: #eee" *ngIf="restaurant">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a routerLink="/">Ana Sayfa</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profilim</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img
+              [src]="getImagePath(restaurant)"
+              alt="avatar"
+              class="img-fluid"
+              style="width: 100%; height: 40rem; object-fit: cover"
+            />
+            <h2 class="my-3">{{restaurant.restaurantName}}</h2>
+            <p class="text-muted mb-1">Kayıt Tarihi : {{restaurant.registerDate}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card mb-4 mb-md-0">
+            <div class="card-body">
+              <h3 style="font-weight: bold; color: #5D196A;">Şifreni Değiştir</h3>
+              <hr />
+              <form [formGroup]="changePasswordForm">
+                <div class="col-md-12">
+                  <label class="labels">Eski Şifre</label>
+                  <input
+                    formControlName="oldPassword"
+                    type="password"
+                    class="form-control"
+                    placeholder="Eski Şifre"
+                  />
+                </div>
+                <br />
+                <div class="col-md-12">
+                  <label class="labels">Yeni Şifre</label>
+                  <input
+                    type="password"
+                    formControlName="newPassword"
+                    class="form-control"
+                    placeholder="Yeni Şifre"
+                    value=""
+                  />
+                </div>
+                <br />
+                <div class="col-md-12">
+                  <label class="labels">Şifre Tekrarı</label>
+                  <input
+                    type="password"
+                    formControlName="newPassword"
+                    class="form-control"
+                    placeholder="Yeni Şifre Tekrarı"
+                  />
+                </div>
+                <div class="mt-5 text-center">
+                  <button class="btn btn-primary profile-button" type="button" (click)="changePassword()">
+                    Şifreyi Değiştir
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" *ngIf="restaurant">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3 style="font-weight: bold; color: #5D196A;">Hesabım</h3>
+              <hr />
+              <div class="row">
+                <div class="col-lg-6">
+                  <label class="labels">Ad</label
+                  ><input type="text" class="form-control" disabled value="{{restaurant.restaurantName}}" />
+                </div>
+                <div class="col-lg-6">
+                  <label class="labels">address</label
+                  ><input type="text" class="form-control" disabled value="{{restaurant.restaurantAddress}}" />
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-lg-12">
+                  <label class="labels">Email Adresi</label
+                  ><input
+                    disabled
+                    type="text"
+                    class="form-control"
+                    placeholder="Email adresi"
+                    value="{{restaurant.mailAddress}}"
+                  />
+                </div>
+              </div>
+              <form class="mt-1">
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="labels" for="form3Example1">Tax No</label>
+                      <input
+                        disabled
+                        type="text"
+                        id="form3Example1"
+                        class="form-control"
+                        value="{{restaurant.taxNumber}}"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="labels" for="form3Example2">Tel No</label>
+                      <input
+                        disabled
+                        type="text"
+                        id="form3Example7"
+                        class="form-control"
+                        value="{{restaurant.phoneNumber}}"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="labels" for="form3Example2"
+                        >Açılış Saati</label
+                      >
+                      <input
+                        disabled
+                        type="text"
+                        id="form3Example2"
+                        placeholder="örn:08.06.2020"
+                        class="form-control"
+                        value="{{restaurant.openingTime}}"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="labels" for="form3Example2"
+                        >Kapanış Saati</label
+                      >
+                      <input
+                        type="text"
+                        disabled
+                        id="form3Example2"
+                        placeholder="örn:08.06.2020"
+                        class="form-control"
+                        value="{{restaurant.closingTime}}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="labels" for="form3Example3"
+                    >Minimum sepet Tutarı</label
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    id="form3Example3"
+                    placeholder="örn:+905437725182"
+                    class="form-control"
+                    value="{{restaurant.minCartPrice}}"
+                  />
+                </div>
+              </form>
+              <div class="form-outline mb-4">
+                <label class="labels" for="form3Example3"
+                  >Resmi Güncelle</label
+                >
+                <input
+                (change)="onChange($event)"
+                  type="file"
+                  id="form3Example3"
+                  class="form-control"
+                />
+                <button class="btn btn-success" (click)="updateImage()">Güncelle</button>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+</section>
